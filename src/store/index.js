@@ -1,36 +1,11 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { legacy_createStore as createStore } from "redux";
-
-const initialState = { counter: 0, showCounter: true };
-
-//A slice of global state
-const counterSlice = createSlice({
-  name: "counter",
-  initialState,
-  reducers: {
-    increment(state) {
-      //not changing into the original state
-      //It's immutable
-      state.counter++;
-    },
-    decrement(state) {
-      state.counter--;
-    },
-    increase(state, action) {
-      state.counter = state.counter + action.payload;
-    },
-    toggle(state) {
-      state.showCounter = !state.showCounter;
-    },
-  },
-});
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./auth";
+import counterReducer from "./counter";
 
 //configureStore merge all reducers into a global one
 const store = configureStore({
-  reducer: counterSlice.reducer,
+  reducer: { counter: counterReducer, auth: authReducer },
 });
-
-export const counterActions = counterSlice.actions;
 
 export default store;
 
